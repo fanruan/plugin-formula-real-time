@@ -1,16 +1,47 @@
-## 自定义公式编辑器
+# 实时运算的公式编辑器插件
+## 插件编译
+将帆软报表安装目录下的相关jar包:
 
-### 实现相关概述
+$installDir/fr-designer-core-8.0.jar
+
+$installDir/fr-designer-chart-8.0.jar
+
+$installDir/fr-designer-report-8.0.jar
+
+$installDir/WebReport/WEB-INF/lib/fr-core-8.0.jar
+
+$installDir/WebReport/WEB-INF/lib/fr-chart-8.0.jar
+
+$installDir/WebReport/WEB-INF/lib/fr-report-8.0.jar
+
+$installDir/WebReport/WEB-INF/lib/fr-platform-8.0.jar
+
+$installDir/WebReport/WEB-INF/lib/fr-third-8.0.jar
+
+拷贝到项目工程的lib/report目录下（如果没有该目录则自行新建）
+
+然后执行ant命名来编辑插件包：
+
+`ant -f build.xml jar`
+
+## 插件安装
+使用帆软设计器自带的插件管理器即可安装。
+
+## 插件使用
+对于部分公式可以直接查看计算结果：
+![t](screenshots/result.png)
+
+## 实现相关概述
 
 公式编辑器面板需要实现接口
 
-```java
+```
 com.fr.design.formula.UIFormula
 ```
 
 注册新的公式编辑器需要实现接口
 
-```java
+```
 com.fr.design.fun.UIFormulaProcessor
 ```
 
@@ -22,10 +53,7 @@ plugin.xml注册节点
  </extra-designer>
 ```
 
-### 效果图(对于部分公式可以直接查看计算结果)
-![t](screenshots/result.png)
-
-### 接口内容
+## 接口内容
 
 com.fr.design.formula.UIFormula
 
@@ -77,18 +105,11 @@ _____
 com.fr.design.fun.UIFormulaProcessor
 
 ```java
-package com.fr.design.fun;
-
-import com.fr.design.formula.UIFormula;
-
-/**
- * @author richie
- * @date 2015-04-17
- * @since 8.0
- * 公式编辑器界面处理接口
- */
-public interface UIFormulaProcessor {
+public interface UIFormulaProcessor extends Immutable{
     String MARK_STRING = "UIFormulaProcessor";
+
+    int CURRENT_LEVEL = 1;
+
 
     /**
      * 普通的公式编辑器界面类
